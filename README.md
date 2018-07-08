@@ -1,8 +1,13 @@
 # mp-quicktranslate
 
-> quick translate
+> 快译拍 微信小程序\
+> 拍照在线翻译
 
-## Build Setup
+- 小程序源码使用mpvue
+- 图片提起文字 by Baidu
+- 文字翻译 by Google
+
+## 编译步骤
 
 ``` bash
 # install dependencies
@@ -17,5 +22,3 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
