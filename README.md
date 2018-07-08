@@ -4,7 +4,7 @@
 > 拍照在线翻译
 
 - 小程序代码使用 mpvue
-- 图片提取文字 by Baidu
+- 图片提取文字 by Baidu
 - 文字翻译 by Google
 
 ## 编译步骤
