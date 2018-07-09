@@ -1,8 +1,9 @@
 <template>
   <div>
-    <p class="card">
+    <!-- <p class="card">
       {{text}}
-    </p>
+    </p> -->
+    <open-data type="userNickName" class="card"></open-data>
   </div>
 </template>
 

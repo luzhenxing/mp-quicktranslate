@@ -1,105 +1,54 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
+  <div class="index">
+    <div class="text"></div>
+    <div class="buttons">
+      <button class="photo-btn" type="primary" @click="toCamera">拍照</button>
+      <button class="photo-btn" @click="selectPhoto">从相册中选择</button>
+      <button class="photo-btn" open-type="openSetting">授权设置</button>
     </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
   </div>
 </template>
+<style lang="stylus" scoped>
+  .index
+    box-sizing border-box
 
+  .buttons
+    position absolute
+    bottom 100rpx
+    padding 0 30rpx
+    box-sizing border-box
+    width 100%
+    .photo-btn
+      margin-top 20rpx
+
+</style>
 <script>
-import card from '@/components/card'
+import { setCameraAuthorize } from '@/utils/index'
 
 export default {
   data () {
     return {
-      motto: 'Hello World',
-      userInfo: {}
     }
   },
-
-  components: {
-    card
-  },
-
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+    async toCamera () {
+      try {
+        const res = await setCameraAuthorize()
+        console.log('授权成功')
+      } catch (e) {
+        console.log('拒绝授权')
+
+      }
+
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
+    selectPhoto (params) {
+      wx.chooseImage({
+        count: 1,
+        success (tempFilePaths, tempFiles) {
+          console.log(tempFilePaths, tempFiles)
         }
       })
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
     }
-  },
-
-  created () {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
   }
 }
 </script>
-
-<style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
-}
-</style>
